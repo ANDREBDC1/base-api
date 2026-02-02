@@ -10,7 +10,7 @@ const dataSourceOptions: DataSourceOptions = process.env.NODE_ENV === 'productio
     database: process.env.DB_NAME,
     synchronize: false,
     migrationsRun: true,
-    entities: ['dist/**/*.entity{.ts,.js}'],
+   entities: [__dirname + '/**/*.entity{.ts,.js}'],
     migrations: ['dist/database/migrations/*{.ts,.js}'],
     logging: true,
   }
@@ -20,7 +20,7 @@ const dataSourceOptions: DataSourceOptions = process.env.NODE_ENV === 'productio
       synchronize: false,
       migrationsRun: false,
       migrations: ['src/**/*.entity{.ts,.js}'],
-      entities: ['src/database/migrations/*{.ts,.js}'],
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
       logging: true,
   };
 

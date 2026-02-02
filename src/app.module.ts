@@ -2,6 +2,9 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { AuthModule } from './auth/auth.module'
+import { PermissionsModule } from "./security/permissions.module"
+import { UsersModule } from './user/user.module'
 
 
 
@@ -15,22 +18,22 @@ const dataSourceOptions: TypeOrmModuleOptions = process.env.NODE_ENV === 'produc
     database: process.env.DB_NAME,
     synchronize: false,
     migrationsRun: true,
-    entities: ['dist/**/*.entity{.ts,.js}'],
-    migrations: ['dist/database/migrations/*{.ts,.js}'],
+    entities: [__dirname + '/**/*.entity{.ts,.js}'],
+    migrations: [__dirname + '/**/migrations/*{.ts,.js}'],
     logging: true,
   }
   : {
      type: 'sqlite',
       database: 'database.sqlite',
-      synchronize: false,
+      synchronize: true,
       migrationsRun: false,
-      migrations: ['src/**/*.entity{.ts,.js}'],
-      entities: ['src/database/migrations/*{.ts,.js}'],
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      migrations: [__dirname + '/**/migrations/*{.ts,.js}'],
       logging: true,
   };
 
 @Module({
-  imports: [TypeOrmModule.forRoot(dataSourceOptions)],
+  imports: [TypeOrmModule.forRoot(dataSourceOptions), AuthModule, PermissionsModule],
   controllers: [AppController],
   providers: [AppService],
 })
