@@ -1,6 +1,5 @@
 import { DataSource, DataSourceOptions } from 'typeorm';
 
-console.log(__dirname)
 console.log(process.env.NODE_ENV)
 export const dataSourceOptions: DataSourceOptions = (process.env.NODE_ENV || 'dev') === 'production' 
   ? {
@@ -21,7 +20,7 @@ export const dataSourceOptions: DataSourceOptions = (process.env.NODE_ENV || 'de
     database: 'database3.sqlite',
     synchronize: false,
     migrationsRun: true,
-    entities: ['src/**/*.entity{.ts,.js}'],
+    entities: ['dist/**/*.entity{.ts,.js}'],
     migrations: [__dirname + '/migrations/*{.ts,.js}'],
     logging: true,
   };
