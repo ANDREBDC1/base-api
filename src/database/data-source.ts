@@ -1,6 +1,6 @@
 import { DataSource, DataSourceOptions } from 'typeorm';
 
-console.log(process.env.NODE_ENV)
+
 export const dataSourceOptions: DataSourceOptions = (process.env.NODE_ENV || 'dev') === 'production' 
   ? {
     type: "postgres",
@@ -17,7 +17,7 @@ export const dataSourceOptions: DataSourceOptions = (process.env.NODE_ENV || 'de
   }
   : {
     type: 'sqlite',
-    database: 'database3.sqlite',
+    database: 'database.sqlite',
     synchronize: false,
     migrationsRun: true,
     entities: ['dist/**/*.entity{.ts,.js}'],
