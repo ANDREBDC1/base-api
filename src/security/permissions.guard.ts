@@ -25,6 +25,12 @@ export class PermissionsGuard implements CanActivate {
       return true;
     }
     const request = context.switchToHttp().getRequest();
+
+    if(!request.user?.id){
+       throw new ForbiddenException('Permissão negada 1');
+    }
+
+ 
     const userId = request.user.id;
 
     const countPermissions = await this.permisionsService.validatePermissions(userId, requiredPermissions);

@@ -6,22 +6,14 @@ import { AuthModule } from './auth/auth.module'
 import { PermissionsModule } from "./security/permissions.module"
 import { UsersModule } from './user/user.module'
 import { dataSourceOptions } from "./database/data-source"
-import { ConfigModule } from '@nestjs/config';
-
-
-
-
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(dataSourceOptions),
-    ConfigModule.forRoot({
-      isGlobal: true, // 👈 MUITO IMPORTANTE
-      envFilePath: '.env',
-    }),
-     AuthModule, 
-     PermissionsModule],
+    AuthModule,
+    PermissionsModule,
+    UsersModule],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }

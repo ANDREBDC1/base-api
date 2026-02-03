@@ -22,8 +22,8 @@ export class PermissionsController {
 
     @Permissions(PermissionAdmin)
     @Post()
-    Create() {
-        return this.permissionsService.getPermissons();
+    Create(dto: PermissionDto) {
+        return this.permissionsService.create(dto);
     }
 
     @Permissions(PermissionAdmin)

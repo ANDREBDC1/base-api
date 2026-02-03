@@ -100,6 +100,9 @@ Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
 
 ## COMANDOS 
 
+## antes de roda comando criação de migração deve roda para pegas as alterações de novas entidades criadas 
+npm run build
+
 ## gerar migrações inicial do banco
 npm run migration:generate
 
