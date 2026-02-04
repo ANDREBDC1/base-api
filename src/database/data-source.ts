@@ -18,8 +18,8 @@ export const dataSourceOptions: DataSourceOptions = (process.env.NODE_ENV || 'de
   : {
     type: 'sqlite',
     database: 'databasegit a.sqlite',
-    synchronize: false,
-    migrationsRun: true,
+    synchronize: true,
+    migrationsRun: false,
     entities: ['dist/**/*.entity{.ts,.js}'],
     migrations: [__dirname + '/migrations/*{.ts,.js}'],
     logging: true,

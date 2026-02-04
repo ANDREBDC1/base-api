@@ -1,4 +1,4 @@
-import {Injectable, CanActivate, ExecutionContext, ForbiddenException} from "@nestjs/common"
+import {Injectable, CanActivate, ExecutionContext, ForbiddenException, Logger} from "@nestjs/common"
 import { Reflector } from "@nestjs/core"
 import { PERMISSIONS_KEY } from "./permissions.decorator"
 import { PermissionsService } from "./permissions.service";
@@ -24,10 +24,15 @@ export class PermissionsGuard implements CanActivate {
     if (!requiredPermissions || requiredPermissions.length === 0) {
       return true;
     }
+
+    
+
     const request = context.switchToHttp().getRequest();
 
+    Logger.log(request.user?.id)
+
     if(!request.user?.id){
-       throw new ForbiddenException('Permissão negada 1');
+       throw new ForbiddenException('acesso negado');
     }
 
  
@@ -39,7 +44,7 @@ export class PermissionsGuard implements CanActivate {
       return true;
     }
 
-    throw new ForbiddenException('Permissão negada');
+    throw new ForbiddenException('acesso negado');
    
   }
 }

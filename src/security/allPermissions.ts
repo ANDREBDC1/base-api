@@ -1,12 +1,11 @@
 
-export class AllPermissions {
-    permissions: [
-        //Permisões de usuario
-        {id : "user:create", descricao: "Criar usuário"},
-        {id : "user:update", descricao: "Atualizar usuário"},
-        {id : "user:delete", descricao: "Deletar usuário"},
-        {id : "user:list", descricao: "Listar usuários"},
-    ]
-}
+export const AllPermissions = [
+    //Permisões de usuario
+    {tipo : "user:create", descricao: "Criar usuário"},
+    {tipo : "user:update", descricao: "Atualizar usuário"},
+    {tipo : "user:delete", descricao: "Deletar usuário"},
+    {tipo : "user:list", descricao: "Listar usuários"},
+    
+]
 
 export const PermissionAdmin  = "ADMIN"

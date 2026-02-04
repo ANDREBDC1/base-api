@@ -2,10 +2,10 @@ import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Permission {
-  @PrimaryGeneratedColumn("identity")
+  @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column({ unique: true, nullable: false})
+  @Column({ nullable: false})
   tipo: string;
 
   @Column()
@@ -14,7 +14,7 @@ export class Permission {
   @Column({ default: true })
   isActive: boolean;
 
-  @Column({unique: true})
+  @Column({nullable: false})
   userId: string;
 
 }

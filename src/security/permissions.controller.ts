@@ -1,13 +1,13 @@
-import { Body, Controller, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, UseGuards, HttpCode, HttpStatus } from '@nestjs/common';
 import { PermissionsService } from './permissions.service';
-import { JwtStrategy } from '../auth/jwt.strategy';
 import { PermissionsGuard } from './permissions.guard';
 import { PermissionAdmin } from "./allPermissions"
 import { Permissions } from "./permissions.decorator"
 import { PermissionDto } from './dto/permisson.dto';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 
-@UseGuards(JwtStrategy, PermissionsGuard)
+@UseGuards(JwtAuthGuard, PermissionsGuard)
 @Controller('permissions')
 export class PermissionsController {
     constructor(
@@ -22,10 +22,13 @@ export class PermissionsController {
 
     @Permissions(PermissionAdmin)
     @Post()
-    Create(dto: PermissionDto) {
+    @HttpCode(HttpStatus.CREATED)
+    Create(@Body() dto: PermissionDto[]) {
+        console.log(dto)
         return this.permissionsService.create(dto);
     }
 
+    @HttpCode(HttpStatus.OK)
     @Permissions(PermissionAdmin)
     @Put(':userId')
     update(

@@ -11,6 +11,6 @@ export class PermissionDto {
     @IsOptional()
     isActive: boolean;
 
-    @IsNotEmpty()
+    @IsOptional()
     userId: string;
 }
