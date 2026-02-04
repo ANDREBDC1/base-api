@@ -11,40 +11,36 @@ export class PermissionsGuard implements CanActivate {
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const requiredPermissions =
-      this.reflector.getAllAndOverride<string[]>(
-        PERMISSIONS_KEY,
-        [
-          context.getHandler(),
-          context.getClass(),
-        ],
-      );
+      const requiredPermissions =
+        this.reflector.getAllAndOverride<string[]>(
+          PERMISSIONS_KEY,
+          [
+            context.getHandler(),
+            context.getClass(),
+          ],
+        );
 
-    // Rota sem permissão definida → libera
-    if (!requiredPermissions || requiredPermissions.length === 0) {
-      return true;
-    }
+      // Rota sem permissão definida → libera
+      if (!requiredPermissions || requiredPermissions.length === 0) {
+        return true;
+      }
+      
+      const request = context.switchToHttp().getRequest();
 
+      if(!request.user?.id){
+        throw new ForbiddenException('acesso negado');
+      }
+
+  
+      const userId = request.user.id;
+
+      const countPermissions = await this.permisionsService.validatePermissions(userId, requiredPermissions);
+
+      if (countPermissions > 0) {
+        return true;
+      }
+
+      throw new ForbiddenException('acesso negado');
     
-
-    const request = context.switchToHttp().getRequest();
-
-    Logger.log(request.user?.id)
-
-    if(!request.user?.id){
-       throw new ForbiddenException('acesso negado');
-    }
-
- 
-    const userId = request.user.id;
-
-    const countPermissions = await this.permisionsService.validatePermissions(userId, requiredPermissions);
-
-    if (countPermissions > 0) {
-      return true;
-    }
-
-    throw new ForbiddenException('acesso negado');
-   
   }
 }

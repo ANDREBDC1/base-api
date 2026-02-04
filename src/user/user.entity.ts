@@ -22,6 +22,10 @@ export class User {
 
   @Column({ default: true })
   isActive: boolean;
+  
+  @Exclude()
+  @Column()
+  isAdmin: boolean
 
   @CreateDateColumn()
   createdAt: Date;

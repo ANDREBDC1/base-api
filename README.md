@@ -111,3 +111,8 @@ npm run migration:gen --name=CriarTabelaUsuario
 
 ## roda as  migrações no bancos 
 npm run migration:run   
+
+## criar migrações como nome
+npm run migration:create --name=CriarNovoMigration
+
+

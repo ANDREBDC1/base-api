@@ -21,6 +21,12 @@ export class PermissionsController {
     }
 
     @Permissions(PermissionAdmin)
+    @Get(":userId")
+    get( @Param('userId') userId: string,) {
+        return this.permissionsService.get(userId);
+    }
+
+    @Permissions(PermissionAdmin)
     @Post()
     @HttpCode(HttpStatus.CREATED)
     Create(@Body() dto: PermissionDto[]) {

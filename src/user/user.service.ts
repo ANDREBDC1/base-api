@@ -23,17 +23,16 @@ export class UsersService {
       email: dto.email,
       password: passwordHash,
     });
-
-    const saved = await this.userRepository.save(user);
-
-    const { password, ...result } = saved;
-    return result;
+  
+    return await this.userRepository.save(user);;
   }
 
   async findAll() {
-    const users = await this.userRepository.find();
-
-    return users.map(({ password, ...rest }) => rest);
+    return await this.userRepository.find({
+      where:{
+        isAdmin: false
+      }
+    });
   }
 
   async findOne(id: string) {
@@ -63,11 +62,7 @@ export class UsersService {
     }
 
     Object.assign(user, dto);
-
-    const updated = await this.userRepository.save(user);
-
-    const { password, ...result } = updated;
-    return result;
+    return await this.userRepository.save(user);
   }
 
   async remove(id: string) {
