@@ -24,7 +24,6 @@ export class PermissionsController {
     @Post()
     @HttpCode(HttpStatus.CREATED)
     Create(@Body() dto: PermissionDto[]) {
-        console.log(dto)
         return this.permissionsService.create(dto);
     }
 

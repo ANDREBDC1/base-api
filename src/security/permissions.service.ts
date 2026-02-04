@@ -35,8 +35,6 @@ export class PermissionsService {
             isActive: true
         });
 
-        console.log(user);
-
         if (!user) {
             throw new NotFoundException(
                 'Usuário não encontrado',
