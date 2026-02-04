@@ -5,13 +5,14 @@ import { User } from "../../user/user.entity";
 import { Permission } from "../../security/permission.entity";
 import { PermissionAdmin } from "../../security/allPermissions";
 
-export class CriarUserAdmin1770230999338 implements MigrationInterface {
+export class CriarUserAdmin1770233924192 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         try {
             const userDb = await queryRunner.manager.count<User>("users",{
                 where: {
-                    email: "admin"
+                    name: "admin",
+                    isAdmin: true
                 }
             })
 
@@ -21,7 +22,7 @@ export class CriarUserAdmin1770230999338 implements MigrationInterface {
 
             const passwordHash = await bcrypt.hash(process.env.ADM_PASSWORD || "admin", 10);
             const result = await queryRunner.manager.insert<User>('users',
-                { email: 'admin', password: passwordHash, isAdmin: true });
+                { name: 'admin', password: passwordHash, isAdmin: true });
 
             const userId = result.identifiers[0].id
 

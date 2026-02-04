@@ -12,6 +12,9 @@ import { Exclude } from 'class-transformer';
 export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
+  
+  @Column({ nullable: true })
+  name: string
 
   @Column({ unique: true })
   email: string;
@@ -20,7 +23,7 @@ export class User {
   @Column()
   password: string;
 
-  @Column({ default: true })
+  @Column({ default: true, nullable: true })
   isActive: boolean;
   
   @Exclude()

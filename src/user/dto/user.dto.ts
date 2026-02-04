@@ -14,4 +14,7 @@ export class UserDto {
 
     @IsOptional()
     isActive?: boolean;
+    
+    @IsOptional()
+    isAdmin: boolean;
 }
