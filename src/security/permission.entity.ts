@@ -1,7 +1,9 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Exclude } from 'class-transformer';
 
 @Entity("permissions")
 export class Permission {
+  @Exclude()
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
@@ -14,6 +16,7 @@ export class Permission {
   @Column({ default: true })
   isActive: boolean;
 
+  @Exclude()
   @Column({nullable: false})
   userId: string;
 

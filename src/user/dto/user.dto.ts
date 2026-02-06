@@ -1,4 +1,5 @@
 import { IsEmail, IsOptional, IsString, MinLength, IsNotEmpty } from 'class-validator';
+import { PermissionDto } from 'src/security/dto/permisson.dto';
 
 export class UserDto {
     
@@ -8,7 +9,6 @@ export class UserDto {
     @IsEmail()
     email?: string;
     
-    @IsString()
     @MinLength(6)
     password: string;
 
@@ -17,4 +17,7 @@ export class UserDto {
     
     @IsOptional()
     isAdmin: boolean;
+    
+    @IsOptional()
+    permissions: PermissionDto[]
 }

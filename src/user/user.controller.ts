@@ -14,7 +14,10 @@ import { UserDto }  from './dto/user.dto';
 import { PermissionsGuard } from 'src/security/permissions.guard';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Permissions } from "../security/permissions.decorator"
-import  { PermissionAdmin } from "../security/allPermissions"
+import  { 
+  PermissionAdmin,
+  PermissionUserCreate,
+} from "../security/allPermissions"
 
 @UseGuards(JwtAuthGuard, PermissionsGuard)
 @Controller('users')
@@ -22,7 +25,7 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  @Permissions(PermissionAdmin)
+  @Permissions(PermissionAdmin, PermissionUserCreate)
   create(@Body() dto: UserDto) {
     return this.usersService.create(dto);
   }

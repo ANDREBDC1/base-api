@@ -1,19 +1,22 @@
 import {
   Injectable,
   NotFoundException,
+  UnauthorizedException
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, In } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
 import { User } from './user.entity';
 import { UserDto } from './dto/user.dto';
+import { PermissionsService } from 'src/security/permissions.service';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+    private readonly permissionsService: PermissionsService
   ) {}
 
   async create(dto: UserDto) {
@@ -23,8 +26,18 @@ export class UsersService {
       email: dto.email,
       password: passwordHash,
     });
+
+    const newUser  = await this.userRepository.save(user)
+
+    if(dto.permissions.length > 0){
+        const permisionsDto = dto.permissions.map(permisssao => {
+          permisssao.userId =  newUser.id
+          return permisssao;
+        })
+       await this.permissionsService.create(permisionsDto)
+    }
   
-    return await this.userRepository.save(user);;
+    return newUser;
   }
 
   async findAll() {

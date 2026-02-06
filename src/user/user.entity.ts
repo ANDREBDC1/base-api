@@ -23,11 +23,13 @@ export class User {
   @Column()
   password: string;
 
-  @Column({ default: true, nullable: true })
+  @Column({ default: true })
   isActive: boolean;
   
   @Exclude()
-  @Column()
+  @Column( {
+    default: false
+  })
   isAdmin: boolean
 
   @CreateDateColumn()

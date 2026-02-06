@@ -22,7 +22,7 @@ export class CriarUserAdmin1770233924192 implements MigrationInterface {
 
             const passwordHash = await bcrypt.hash(process.env.ADM_PASSWORD || "admin", 10);
             const result = await queryRunner.manager.insert<User>('users',
-                { name: 'admin', password: passwordHash, isAdmin: true });
+                { name: 'admin', email: process.env.ADM_EMAIL, password: passwordHash, isAdmin: true });
 
             const userId = result.identifiers[0].id
 
