@@ -1,15 +1,15 @@
 import {
   Injectable,
-  NotFoundException,
-  UnauthorizedException
+  NotFoundException
 } from '@nestjs/common';
+
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, In } from 'typeorm';
-import * as bcrypt from 'bcrypt';
+import { Repository, Not } from 'typeorm';
 
 import { User } from './user.entity';
 import { UserDto } from './dto/user.dto';
 import { PermissionsService } from 'src/security/permissions.service';
+import { hash } from '../commun/hashString';
 
 @Injectable()
 export class UsersService {
@@ -20,9 +20,10 @@ export class UsersService {
   ) {}
 
   async create(dto: UserDto) {
-    const passwordHash = await bcrypt.hash(dto.password, 10);
+    const passwordHash = await hash(dto.password);
 
     const user = this.userRepository.create({
+      name: dto.name,
       email: dto.email,
       password: passwordHash,
     });
@@ -40,10 +41,11 @@ export class UsersService {
     return newUser;
   }
 
-  async findAll() {
+  async findAll(userIdCurrent: string) {
     return await this.userRepository.find({
       where:{
-        isAdmin: false
+        isAdmin: false,
+        id: Not(userIdCurrent)
       }
     });
   }
@@ -71,7 +73,7 @@ export class UsersService {
     }
 
     if (dto.password) {
-      dto.password = await bcrypt.hash(dto.password, 10);
+      dto.password = await hash(dto.password);
     }
 
     Object.assign(user, dto);

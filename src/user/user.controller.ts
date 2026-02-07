@@ -17,7 +17,11 @@ import { Permissions } from "../security/permissions.decorator"
 import  { 
   PermissionAdmin,
   PermissionUserCreate,
+  PermissionUserDelete,
+  PermissionUserList,
+  PermissionUserUpdate,
 } from "../security/allPermissions"
+import { CurrentUser } from './current-user.decorator';
 
 @UseGuards(JwtAuthGuard, PermissionsGuard)
 @Controller('users')
@@ -31,19 +35,19 @@ export class UsersController {
   }
 
   @Get()
-  @Permissions(PermissionAdmin)
-  async findAll() {
-    return await this.usersService.findAll();
+  @Permissions(PermissionAdmin, PermissionUserList)
+  async findAll(@CurrentUser() user) {
+    return await this.usersService.findAll(user.id);
   }
 
   @Get(':id')
-  @Permissions(PermissionAdmin)
+  @Permissions(PermissionAdmin, PermissionUserList)
   findOne(@Param('id') id: string) {
     return this.usersService.findOne(id);
   }
 
   @Put(':id')
-  @Permissions(PermissionAdmin)
+  @Permissions(PermissionAdmin, PermissionUserUpdate)
   update(
     @Param('id') id: string,
     @Body() dto: UserDto,
@@ -52,7 +56,7 @@ export class UsersController {
   }
 
   @Delete(':id')
-  @Permissions(PermissionAdmin)
+  @Permissions(PermissionAdmin, PermissionUserDelete)
   remove(@Param('id') id: string) {
     return this.usersService.remove(id);
   }

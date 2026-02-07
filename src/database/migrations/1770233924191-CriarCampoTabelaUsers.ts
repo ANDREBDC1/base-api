@@ -8,14 +8,14 @@ export class CriarCampoTabelaUser1770233924191 implements MigrationInterface {
             new TableColumn({
                 name: 'isAdmin',
                 type: 'boolean',
-                //isNullable: true, // sempre criar um novo campo com esse cara true
+                isNullable: true,
                 default: false
             }),
             new TableColumn({
                 name: 'name',
                 length: '100',
                 type: 'varchar',
-                isNullable: true,
+                isNullable: true,  // sempre criar um novo campo com esse cara true
             })
         ])
     }

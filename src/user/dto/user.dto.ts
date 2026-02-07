@@ -16,8 +16,5 @@ export class UserDto {
     isActive?: boolean;
     
     @IsOptional()
-    isAdmin: boolean;
-    
-    @IsOptional()
     permissions: PermissionDto[]
 }

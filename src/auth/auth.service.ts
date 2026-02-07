@@ -2,10 +2,11 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import * as bcrypt from 'bcrypt';
+
 
 import { User } from '../user/user.entity';
 import { LoginDto } from './login.dto';
+import { compare } from '../commun/hashString';
 
 
 @Injectable()
@@ -26,7 +27,7 @@ export class AuthService {
       throw new UnauthorizedException('Email ou senha inválidos');
     }
 
-    const passwordMatch = await bcrypt.compare(
+    const passwordMatch = await compare(
       dto.password,
       user.password,
     );
